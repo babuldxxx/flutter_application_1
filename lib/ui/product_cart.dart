@@ -3,9 +3,10 @@ import 'package:flutter_application_1/domain/models/product.dart';
 import 'package:flutter_application_1/ui/screens/product_screen.dart';
 
 class ProductCart extends StatelessWidget {
-const ProductCart({ super.key, required this.product});
+const ProductCart({ super.key, required this.product, this.onPressed});
 
   final Product product;
+  final VoidCallback? onPressed;
   
   @override
   Widget build(BuildContext context){
