@@ -34,7 +34,7 @@ import 'package:flutter_application_1/ui/screens/product_details_screen.dart';
   ];
 
 class MainScreen extends StatefulWidget {
-  MainScreen({super.key, required this.title});
+  const MainScreen({super.key, required this.title});
   final String title;
 
   @override
