@@ -25,19 +25,34 @@ class _AddProductScreenState extends State<AddProductScreen> {
         children: [
           Image.asset('assets/img/monkey_drunk.jpg'),
           TextFieldApp(controller: nameController, hintText: 'Название товара',),
-          ElevatedButton(onPressed: (){
-            products.add(
-              Product(
-                name: nameController.text,
-                description: descController.text,
-                pathImage: 'assets/img/monkey_drunk.jpg',
-                qrData: nameController.text,
-              )
-            );
-            Navigator.pop(context);
-          }, child: Text('Добавить'))
+          ElevatedButton(
+            onPressed: _addProduct, 
+            child: Text('Добавить')
+          )
         ]
       )
     );
+  }
+  void _addProduct(){
+    if (nameController.text.isEmpty){
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Введите название товара')),
+      );
+      return;
+    }
+    
+    final String newId = 'product_${DateTime.now().microsecondsSinceEpoch}_${DateTime.now().microsecond}';
+
+    products.add(
+      Product(
+        id: newId,
+        name: nameController.text,
+        description: descController.text,
+        pathImage: 'assets/img/monkey_drunk.jpg',
+        qrData: newId,
+      ),
+    );
+    
+    Navigator.pop(context);
   }
 }

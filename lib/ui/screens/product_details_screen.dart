@@ -9,6 +9,9 @@ class ProductDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final String qrData = product.id;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Товар "${product.name}"'),
@@ -96,7 +99,7 @@ class ProductDetailsScreen extends StatelessWidget {
 
                   PrettyQrView(
                     qrImage: QrImage(
-                      QrCode(8, QrErrorCorrectLevel.H)..addData("${product.name} ${product.isActive}")
+                      QrCode(8, QrErrorCorrectLevel.H)..addData(qrData)
                     ),
                     decoration: const PrettyQrDecoration(),
                   )
