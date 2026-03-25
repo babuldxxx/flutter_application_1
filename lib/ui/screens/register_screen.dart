@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/domain/validators/app_validator.dart';
 import 'package:flutter_application_1/ui/widgets/button_app.dart';
 import 'package:flutter_application_1/ui/widgets/text_field_app.dart';
 import 'package:flutter_application_1/domain/models/user.dart';
@@ -47,14 +48,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextFieldApp(controller: nameController, hintText: 'Имя'),
+              TextFieldApp(controller: nameController, hintText: 'Имя', validator: AppValidator.combine([
+                AppValidator.isNotEmpty,
+                AppValidator.minLength(3),
+              ])),
+
               SizedBox(height: 18,),
-              TextFieldApp(controller: loginController, hintText: 'Логин'),
+
+              TextFieldApp(controller: loginController, hintText: 'Логин', validator: AppValidator.combine([
+                AppValidator.isNotEmpty,
+                AppValidator.minLength(5)
+              ]),),
+
               SizedBox(height: 18,),
-              TextFieldApp(controller: passwordController, hintText: 'Пароль', isObscure: true,),
+
+              TextFieldApp(controller: passwordController, hintText: 'Пароль', isObscure: true, validator: AppValidator.combine([
+                AppValidator.isNotEmpty, 
+                AppValidator.minLength(6),
+                AppValidator.equalsController(confirmPasswordController)
+              ]),),
+
               SizedBox(height: 18,),
-              TextFieldApp(controller: confirmPasswordController, hintText: 'Подтвердите пароль', isObscure: true,),
+
+              TextFieldApp(controller: confirmPasswordController, hintText: 'Подтвердите пароль', isObscure: true, validator: AppValidator.combine([
+                AppValidator.isNotEmpty,
+                AppValidator.minLength(6),
+                AppValidator.equalsController(passwordController)
+              ]),),
+
               SizedBox(height: 18,),
+
               ButtonApp(onPressed: register, text: 'Зарегистрироваться',)
             ],
           )
@@ -68,7 +91,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if(nameController.text.isEmpty || loginController.text.isEmpty || passwordController.text.isEmpty){
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Поля введены неверно')));
     }
-    else if(nameController.text.length <3 || loginController.text.length <3 || passwordController.text.length < 3){
+    else if(nameController.text.length <3){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Значения в полях должны быть не короче 3 символов')));
+    }
+    else if(loginController.text.length < 5 || passwordController.text.length < 5){
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Значения в полях должны быть не короче 3 символов')));
     }
     else if (passwordController.text != confirmPasswordController.text){

@@ -6,11 +6,13 @@ class TextFieldApp extends StatelessWidget {
     this.controller,
     this.hintText,
     this.isObscure = false,
+    this.validator
   });
 
   final TextEditingController? controller;
   final String? hintText;
   final bool isObscure;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -72,11 +74,7 @@ class TextFieldApp extends StatelessWidget {
           )
         )
       ),
-      validator: (value) {
-        if (value!.isEmpty) return 'Поле не может быть пустым';
-        if (value.length < 3) return 'Поле не может содержать меньше 3 символов';
-        return null;
-      },
+      validator: validator
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/domain/models/product.dart';
-import 'package:flutter_application_1/ui/product_cart.dart';
+import 'package:flutter_application_1/ui/widgets/product_cart.dart';
 import 'package:flutter_application_1/ui/screens/add_product_screen.dart';
 import 'package:flutter_application_1/ui/screens/product_details_screen.dart';
 import 'package:flutter_application_1/ui/screens/qr_scanner_screen.dart';
