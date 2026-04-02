@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/domain/models/product.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
@@ -9,7 +10,6 @@ class ProductDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final String qrData = product.id;
 
     return Scaffold(
@@ -24,12 +24,19 @@ class ProductDetailsScreen extends StatelessWidget {
           children: [
             Stack(
               children: [
-                Image.asset(
-                  product.pathImage,
-                  height: 350,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
+                (product.pathImage.startsWith('assets/')
+                    ? Image.asset(
+                        product.pathImage,
+                        height: 350,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.file(
+                        File(product.pathImage),
+                        height: 350,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      )),
 
                 Container(
                   height: 350,
@@ -40,9 +47,9 @@ class ProductDetailsScreen extends StatelessWidget {
                       colors: [
                         Colors.transparent,
                         Color.fromARGB(192, 99, 65, 20),
-                      ]
-                    )
-                  )
+                      ],
+                    ),
+                  ),
                 ),
 
                 Positioned(
@@ -58,11 +65,11 @@ class ProductDetailsScreen extends StatelessWidget {
                         Shadow(
                           blurRadius: 10,
                           color: Colors.black45,
-                          offset: Offset(2, 2)
-                        )
-                      ]
-                    )
-                  )
+                          offset: Offset(2, 2),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -81,7 +88,7 @@ class ProductDetailsScreen extends StatelessWidget {
                       fontSize: 22,
                       fontWeight: FontWeight.w800,
                       color: Color.fromARGB(248, 51, 34, 11),
-                    )
+                    ),
                   ),
 
                   Padding(
@@ -93,20 +100,19 @@ class ProductDetailsScreen extends StatelessWidget {
                         height: 1.5,
                         fontWeight: FontWeight.w600,
                         color: Color.fromARGB(255, 43, 33, 25),
-                      )
-                    )
+                      ),
+                    ),
                   ),
 
                   PrettyQrView(
                     qrImage: QrImage(
-                      QrCode(8, QrErrorCorrectLevel.H)..addData(qrData)
+                      QrCode(8, QrErrorCorrectLevel.H)..addData(qrData),
                     ),
                     decoration: const PrettyQrDecoration(),
-                  )
-                  
+                  ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

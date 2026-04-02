@@ -1,14 +1,15 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/domain/models/product.dart';
 
 class ProductCart extends StatelessWidget {
-const ProductCart({ super.key, required this.product, this.onPressed});
+  const ProductCart({super.key, required this.product, this.onPressed});
 
   final Product product;
   final VoidCallback? onPressed;
-  
+
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
@@ -25,23 +26,33 @@ const ProductCart({ super.key, required this.product, this.onPressed});
               blurRadius: 8,
               offset: const Offset(0, 4),
             ),
-          ]
+          ],
         ),
         child: Column(
           children: [
             Container(
               margin: const EdgeInsets.only(bottom: 12),
-              child: Image.asset(
-                  product.pathImage,
-                  height: 200,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
+              child: (product.pathImage.startsWith('assets/')
+                  ? Image.asset(
+                      product.pathImage,
+                      height: 200,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    )
+                  : Image.file(
+                      File(product.pathImage),
+                      height: 200,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    )),
             ),
-            Text(product.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800))
-          ]
-        )
-      )
+            Text(
+              product.name,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
